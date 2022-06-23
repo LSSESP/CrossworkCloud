@@ -1,0 +1,1403 @@
+{
+	"info": {
+		"_postman_id": "1949115b-852a-40fa-9c88-7621dca2ea45",
+		"name": "Crosswork Cloud",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1337005"
+	},
+	"item": [
+		{
+			"name": "CNI",
+			"item": [
+				{
+					"name": "Policy :: Returns a list of all configured policies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/alarm/policies",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"alarm",
+								"policies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Policy :: Returns details on a specific configured policy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/alarm/policies/{{cc.policyId}}",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"alarm",
+								"policies",
+								"{{cc.policyId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Notification :: Returns a list of all configured notification endpoints",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/notifications/endpoints",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"notifications",
+								"endpoints"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Notification :: Provision notification end point",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"cc_euuid = pm.response.json().results[0].setNotificationEndpointResponse.euuid",
+									"",
+									"pm.collectionVariables.set(\"cc.euuid\", cc_euuid);",
+									"",
+									"console.log(\"euuid: \"+  pm.collectionVariables.get(\"cc.euuid\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operations\": [\n    {\n      \"set_notification_endpoint_request\": {\n        \"email\": {\n          \"email\": \"{{notification_email_email}}\"\n        },\n        \"name\": \"{{notification_email_name}}\",\n        \"enabled\": true\n      }\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/provision",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"provision"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Notification :: Delete notification end point",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operations\": [\n    {\n      \"delete_notification_endpoint_request\": \"{{cc.euuid}}\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/provision",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"provision"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pfx :: Returns a list of prefixes to which an organization is subscribed",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/prefixes",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"prefixes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pfx :: Returns details on a specific configured prefix",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/prefixes/64.101.0.0/18",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"prefixes",
+								"64.101.0.0",
+								"18"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pfx :: Provision Prefixes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operations\": [\n    {\n      \"setPrefixRequest\": {\n        \"prefix\": \"64.101.0.0/18\",\n        \"tags\": [\n          \"css\",\n          \"demo\"\n        ]\n      },\n      \"o_creat\": true,\n      \"o_excl\": true\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/provision",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"provision"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pfx :: Provision Prefixes with Policy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operations\": [\n    {\n      \"setPrefixRequest\": {\n        \"prefix\": \"64.101.0.0/18\",\n        \"tags\": [\n          \"css\",\n          \"demo\"\n        ],\n        \"policy_id\": \"{{cc.policyId}}\"\n      },\n      \"o_creat\": true,\n      \"o_excl\": true\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/provision",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"provision"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pfx :: Provision Prefixes - add Policy to already provisioned prefix",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operations\": [\n    {\n      \"setPrefixRequest\": {\n        \"prefix\": \"64.101.0.0/18\",\n        \"tags\": [\n          \"css\",\n          \"demo\"\n        ],\n        \"policy_id\": \"{{cc.policyId}}\"\n      }\n\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/provision",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"provision"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pfx :: Delete Prefixes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operations\": [\n    {\n      \"deletePrefixRequest\": {\n        \"prefix\": \"64.101.0.0/18\"\n      }\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/provision",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"provision"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ASN :: Provision ASN",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operations\": [\n    {\n      \"set_asn_request\": {\n        \"asn\": \"{{ASN}}\",\n        \"tags\": [\n          \"css\",\n          \"demo\"\n        ]\n      },\n      \"o_creat\": true,\n      \"o_excl\": true\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/provision",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"provision"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ASN :: Delete ASN",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operations\": [\n    {\n      \"delete_asn_request\": {\n        \"asn\": {{ASN}}\n      }\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/provision",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"provision"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Policy :: Provision Policy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"cc_policyId = pm.response.json().results[0].setAlarmPolicyResponse.policyId",
+									"",
+									"pm.collectionVariables.set(\"cc.policyId\", cc_policyId);",
+									"",
+									"console.log(\"cc_policyId: \"+  pm.collectionVariables.get(\"cc.policyId\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operations\": [\n    {\n      \"set_group_request\": {\n        \"group_name\": \"CSS Demo Policy\",\n        \"origin_asns\": [\n          109,\n          7019\n        ],\n        \"policy_type\": \"PREFIX_POLICY\",\n        \"tags\": [\n          \"css\",\n          \"demo\"\n        ],\n        \"alarms\": {\n          \"1\": {\n            \"alarm_type\": \"ORIGIN_ASN_VIOLATION\",\n            \"endpoints\": [\n              {\n                \"endpoint_ids\": [\n                  \"{{cc.euuid}}\"\n                ],\n                \"max_threshold\": 1,\n                \"min_threshold\": 0\n              }\n            ],\n            \"level\": \"RED\",\n            \"max_peer_count\": 1,\n            \"min_peer_count\": 0\n          }\n        }\n      }\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/provision",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"provision"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Policy :: Modify Policy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"cc_policyId = pm.response.json().results[0].setAlarmPolicyResponse.policyId",
+									"",
+									"pm.collectionVariables.set(\"cc.policyId\", cc_policyId);",
+									"",
+									"console.log(\"cc_policyId: \"+  cc_policyId);",
+									"console.log(\"cc_policyId: \"+  pm.collectionVariables.get(\"cc.policyId\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operations\": [\n    {\n      \"set_group_request\": {\n        \"guuid\": \"{{cc.policyId}}\",\n        \"group_name\": \"CSS Demo Policy\",\n        \"origin_asns\": [\n          1099,\n          7019\n        ],\n        \"policy_type\": \"PREFIX_POLICY\",\n        \"tags\": [\n          \"css\",\n          \"demo\"\n        ],\n        \"alarms\": {\n          \"1\": {\n            \"alarm_type\": \"ORIGIN_ASN_VIOLATION\",\n            \"endpoints\": [\n              {\n                \"endpoint_ids\": [\n                  \"{{cc.euuid}}\"\n                ],\n                \"max_threshold\": 1,\n                \"min_threshold\": 0\n              }\n            ],\n            \"level\": \"RED\",\n            \"max_peer_count\": 1,\n            \"min_peer_count\": 0\n          }\n        }\n      }\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/provision",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"provision"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Policy :: Delete Policy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operations\": [\n    {\n      \"delete_group_request\": \"{{cc.policyId}}\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/provision",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"provision"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alarm :: Returns the state of all alarms",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/alarms",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"alarms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alarm :: Returns details on a specific alarm",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/alarms/f18f6b13-50eb-470f-8d70-2ca68c1d0f30",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"alarms",
+								"f18f6b13-50eb-470f-8d70-2ca68c1d0f30"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CTA",
+			"item": [
+				{
+					"name": "Get all Devices",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"",
+									"device_id = pm.response.json().devices[0].deviceInfo.deviceId",
+									"pm.collectionVariables.set(\"cta.device_id\", device_id);",
+									"",
+									"console.log(\"Device ID: \"+  pm.collectionVariables.get(\"cta.device_id\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/devices",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"devices"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Device ID by Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"",
+									"device_id = pm.response.json().devices[0].deviceInfo.deviceId",
+									"",
+									"pm.collectionVariables.set(\"cta.device_id\", device_id);",
+									"",
+									"console.log(\"Device ID: \"+  pm.response.json().devices[0].deviceInfo.deviceId);",
+									"console.log(\"Device ID: \"+  pm.collectionVariables.get(\"cta.device_id\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/devices?name={{device_name}}",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"devices"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "{{device_name}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get SNMP counter traffic for all device",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const moment= require('moment');",
+									"",
+									"//time now",
+									"ed = currentDate = moment()",
+									"",
+									"// week earlier",
+									"sd = moment().subtract(7, 'days');",
+									"",
+									"pm.variables.set(\"end_time\", ed);",
+									"//console.log(\"Today is: \" + ed.format());",
+									"",
+									"pm.variables.set(\"start_time\", sd);",
+									"",
+									"//console.log(\"5 days ago was: \" + sd.format());",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/devices/statistics/totals?format=totals&timeStart={{start_time}}&timeEnd={{end_time}}",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"devices",
+								"statistics",
+								"totals"
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "totals"
+								},
+								{
+									"key": "timeStart",
+									"value": "{{start_time}}"
+								},
+								{
+									"key": "timeEnd",
+									"value": "{{end_time}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get SNMP counter traffic for a specified device",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const moment= require('moment');",
+									"",
+									"//time now",
+									"ed = currentDate = moment()",
+									"",
+									"// week earlier",
+									"sd = moment().subtract(7, 'days');",
+									"",
+									"pm.variables.set(\"end_time\", ed);",
+									"pm.variables.set(\"start_time\", sd);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/devices/{{cta.device_id}}/statistics/totals?format=totals&timeStart={{start_time}}&timeEnd={{end_time}}",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"devices",
+								"{{cta.device_id}}",
+								"statistics",
+								"totals"
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "totals"
+								},
+								{
+									"key": "timeStart",
+									"value": "{{start_time}}"
+								},
+								{
+									"key": "timeEnd",
+									"value": "{{end_time}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get netflow traffic by prefix",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const moment= require('moment');",
+									"",
+									"//time now",
+									"ed = currentDate = moment()",
+									"",
+									"// week earlier",
+									"sd = moment().subtract(7, 'days');",
+									"",
+									"pm.variables.set(\"end_time\", ed);",
+									"pm.variables.set(\"start_time\", sd);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/traffic/prefixes?format=totals&timeStart={{start_time}}&timeEnd={{end_time}}",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"traffic",
+								"prefixes"
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "totals"
+								},
+								{
+									"key": "timeStart",
+									"value": "{{start_time}}"
+								},
+								{
+									"key": "timeEnd",
+									"value": "{{end_time}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get netflow traffic for a specified prefix",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const moment= require('moment');",
+									"",
+									"//time now",
+									"ed = currentDate = moment()",
+									"",
+									"// week earlier",
+									"sd = moment().subtract(7, 'days');",
+									"",
+									"pm.variables.set(\"end_time\", ed);",
+									"//console.log(\"Today is: \" + ed.format());",
+									"",
+									"pm.variables.set(\"start_time\", sd);",
+									"",
+									"//console.log(\"5 days ago was: \" + sd.format());",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/traffic/prefixes/172.18.98.0%2F24?format=totals&timeStart={{start_time}}&timeEnd={{end_time}}",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"traffic",
+								"prefixes",
+								"172.18.98.0%2F24"
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "totals"
+								},
+								{
+									"key": "timeStart",
+									"value": "{{start_time}}"
+								},
+								{
+									"key": "timeEnd",
+									"value": "{{end_time}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get netflow traffic for a specified prefix device",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const moment= require('moment');",
+									"",
+									"//time now",
+									"ed = currentDate = moment()",
+									"",
+									"// week earlier",
+									"sd = moment().subtract(7, 'days');",
+									"",
+									"pm.variables.set(\"end_time\", ed);",
+									"//console.log(\"Today is: \" + ed.format());",
+									"",
+									"pm.variables.set(\"start_time\", sd);",
+									"",
+									"//console.log(\"5 days ago was: \" + sd.format());",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/traffic/prefixes/10.8.0.0/devices?format=totals&timeStart={{start_time}}&timeEnd={{end_time}}",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"traffic",
+								"prefixes",
+								"10.8.0.0",
+								"devices"
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "totals"
+								},
+								{
+									"key": "timeStart",
+									"value": "{{start_time}}"
+								},
+								{
+									"key": "timeEnd",
+									"value": "{{end_time}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
