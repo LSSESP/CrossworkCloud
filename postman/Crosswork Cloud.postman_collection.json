@@ -10,99 +10,63 @@
 			"name": "CNI",
 			"item": [
 				{
-					"name": "Policy :: Returns a list of all configured policies",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{TOKEN}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "https://{{host}}/api/{{api_version}}/alarm/policies",
-							"protocol": "https",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"{{api_version}}",
-								"alarm",
-								"policies"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Policy :: Returns details on a specific configured policy",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{TOKEN}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "https://{{host}}/api/{{api_version}}/alarm/policies/{{cc.policyId}}",
-							"protocol": "https",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"{{api_version}}",
-								"alarm",
-								"policies",
-								"{{cc.policyId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Notification :: Returns a list of all configured notification endpoints",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/notifications/endpoints",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"notifications",
+								"endpoints"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Notification :: Get Endpoint ID for our email from notification_email_email variable",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"res = pm.response.json().endpoints",
+									"",
+									"let endpoint = res.find(o => ",
+									"    o.email?.email === pm.variables.get(\"notification_email_email\"));",
+									"",
+									"console.log(endpoint)",
+									"cc_euuid = endpoint.euuid",
+									"pm.collectionVariables.set(\"cc.euuid\", cc_euuid);",
 									""
 								],
 								"type": "text/javascript"
@@ -360,7 +324,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"operations\": [\n    {\n      \"setPrefixRequest\": {\n        \"prefix\": \"64.101.0.0/18\",\n        \"tags\": [\n          \"css\",\n          \"demo\"\n        ]\n      },\n      \"o_creat\": true,\n      \"o_excl\": true\n    }\n  ]\n}",
+							"raw": "{\n  \"operations\": [\n    {\n      \"setPrefixRequest\": {\n        \"prefix\": \"{{prefix}}\",\n        \"tags\": [\n          \"css\",\n          \"demo\"\n        ]\n      },\n      \"o_creat\": true,\n      \"o_excl\": true\n    }\n  ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -411,7 +375,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"operations\": [\n    {\n      \"setPrefixRequest\": {\n        \"prefix\": \"64.101.0.0/18\",\n        \"tags\": [\n          \"css\",\n          \"demo\"\n        ],\n        \"policy_id\": \"{{cc.policyId}}\"\n      },\n      \"o_creat\": true,\n      \"o_excl\": true\n    }\n  ]\n}",
+							"raw": "{\n  \"operations\": [\n    {\n      \"setPrefixRequest\": {\n        \"prefix\": \"{{prefix}}\",\n        \"tags\": [\n          \"css\",\n          \"demo\"\n        ],\n        \"policy_id\": \"{{cc.policyId}}\"\n      },\n      \"o_creat\": true,\n      \"o_excl\": true\n    }\n  ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -462,7 +426,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"operations\": [\n    {\n      \"setPrefixRequest\": {\n        \"prefix\": \"64.101.0.0/18\",\n        \"tags\": [\n          \"css\",\n          \"demo\"\n        ],\n        \"policy_id\": \"{{cc.policyId}}\"\n      }\n\n    }\n  ]\n}",
+							"raw": "{\n  \"operations\": [\n    {\n      \"setPrefixRequest\": {\n        \"prefix\": \"{{prefix}}\",\n        \"tags\": [\n          \"css\",\n          \"demo\"\n        ],\n        \"policy_id\": \"{{cc.policyId}}\"\n      }\n\n    }\n  ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -513,7 +477,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"operations\": [\n    {\n      \"deletePrefixRequest\": {\n        \"prefix\": \"64.101.0.0/18\"\n      }\n    }\n  ]\n}",
+							"raw": "{\n  \"operations\": [\n    {\n      \"deletePrefixRequest\": {\n        \"prefix\": \"{{prefix}}\"\n      }\n    }\n  ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -670,7 +634,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"operations\": [\n    {\n      \"set_group_request\": {\n        \"group_name\": \"CSS Demo Policy\",\n        \"origin_asns\": [\n          109,\n          7019\n        ],\n        \"policy_type\": \"PREFIX_POLICY\",\n        \"tags\": [\n          \"css\",\n          \"demo\"\n        ],\n        \"alarms\": {\n          \"1\": {\n            \"alarm_type\": \"ORIGIN_ASN_VIOLATION\",\n            \"endpoints\": [\n              {\n                \"endpoint_ids\": [\n                  \"{{cc.euuid}}\"\n                ],\n                \"max_threshold\": 1,\n                \"min_threshold\": 0\n              }\n            ],\n            \"level\": \"RED\",\n            \"max_peer_count\": 1,\n            \"min_peer_count\": 0\n          }\n        }\n      }\n    }\n  ]\n}",
+							"raw": "{\n  \"operations\": [\n    {\n      \"set_group_request\": {\n        \"group_name\": \"{{policy_name}}\",\n        \"origin_asns\": [\n          109,\n          7019\n        ],\n        \"policy_type\": \"PREFIX_POLICY\",\n        \"tags\": [\n          \"css\",\n          \"demo\"\n        ],\n        \"alarms\": {\n          \"1\": {\n            \"alarm_type\": \"ORIGIN_ASN_VIOLATION\",\n            \"endpoints\": [\n              {\n                \"endpoint_ids\": [\n                  \"{{cc.euuid}}\"\n                ],\n                \"max_threshold\": 1,\n                \"min_threshold\": 0\n              }\n            ],\n            \"level\": \"RED\",\n            \"max_peer_count\": 1,\n            \"min_peer_count\": 0\n          }\n        }\n      }\n    }\n  ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -703,7 +667,7 @@
 									"",
 									"pm.collectionVariables.set(\"cc.policyId\", cc_policyId);",
 									"",
-									"console.log(\"cc_policyId: \"+  cc_policyId);",
+									"//console.log(\"cc_policyId: \"+  cc_policyId);",
 									"console.log(\"cc_policyId: \"+  pm.collectionVariables.get(\"cc.policyId\"));"
 								],
 								"type": "text/javascript"
@@ -794,6 +758,151 @@
 								"api",
 								"{{api_version}}",
 								"provision"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Policy :: Get Policy ID for our policy from variable policy_name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"res = pm.response.json().policies",
+									"",
+									"let policy = res.find(o => o.name === pm.variables.get(\"policy_name\"));",
+									"",
+									"cc_policyId = policy.policyId",
+									"pm.collectionVariables.set(\"cc.policyId\", cc_policyId);",
+									"console.log(\"cc_policyId: \"+  pm.collectionVariables.get(\"cc.policyId\"));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/alarm/policies",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"alarm",
+								"policies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Policy :: Returns a list of all configured policies Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/alarm/policies",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"alarm",
+								"policies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Policy :: Returns details on a specific configured policy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/alarm/policies/{{cc.policyId}}",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"alarm",
+								"policies",
+								"{{cc.policyId}}"
 							]
 						}
 					},
@@ -1285,7 +1394,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/{{api_version}}/traffic/prefixes/172.18.98.0%2F24?format=totals&timeStart={{start_time}}&timeEnd={{end_time}}",
+							"raw": "https://{{host}}/api/{{api_version}}/traffic/prefixes/10.225.196.0?format=totals&timeStart={{start_time}}&timeEnd={{end_time}}",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
@@ -1295,7 +1404,7 @@
 								"{{api_version}}",
 								"traffic",
 								"prefixes",
-								"172.18.98.0%2F24"
+								"10.225.196.0"
 							],
 							"query": [
 								{
@@ -1398,6 +1507,16 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"variable": [
+		{
+			"key": "cc.policyId",
+			"value": ""
+		},
+		{
+			"key": "cc.euuid",
+			"value": ""
 		}
 	]
 }
