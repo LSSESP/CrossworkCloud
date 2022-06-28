@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "1949115b-852a-40fa-9c88-7621dca2ea45",
+		"_postman_id": "c90ae3fd-707e-416f-a0ea-aefd9b7a24e4",
 		"name": "Crosswork Cloud",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "1337005"
@@ -1267,7 +1267,7 @@
 					"response": []
 				},
 				{
-					"name": "Get netflow traffic by prefix",
+					"name": "Get netflow traffic by prefixes",
 					"event": [
 						{
 							"listen": "test",
@@ -1373,6 +1373,11 @@
 									"pm.variables.set(\"start_time\", sd);",
 									"",
 									"//console.log(\"5 days ago was: \" + sd.format());",
+									"",
+									"prefixEncoded=escape(encodeURIComponent(pm.variables.get(\"prefix\")));",
+									"",
+									"pm.variables.set(\"prefixEncoded\", prefixEncoded);",
+									"",
 									""
 								],
 								"type": "text/javascript"
@@ -1394,7 +1399,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/{{api_version}}/traffic/prefixes/10.225.196.0?format=totals&timeStart={{start_time}}&timeEnd={{end_time}}",
+							"raw": "https://{{host}}/api/{{api_version}}/traffic/prefixes/{{prefixEncoded}}?format=totals&timeStart={{start_time}}&timeEnd={{end_time}}",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
@@ -1404,7 +1409,94 @@
 								"{{api_version}}",
 								"traffic",
 								"prefixes",
-								"10.225.196.0"
+								"{{prefixEncoded}}"
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "totals"
+								},
+								{
+									"key": "timeStart",
+									"value": "{{start_time}}"
+								},
+								{
+									"key": "timeEnd",
+									"value": "{{end_time}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get netflow traffic for a specified prefix devices",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const moment= require('moment');",
+									"",
+									"//time now",
+									"ed = currentDate = moment()",
+									"",
+									"// week earlier",
+									"sd = moment().subtract(7, 'days');",
+									"",
+									"pm.variables.set(\"end_time\", ed);",
+									"//console.log(\"Today is: \" + ed.format());",
+									"",
+									"pm.variables.set(\"start_time\", sd);",
+									"",
+									"//console.log(\"5 days ago was: \" + sd.format());",
+									"",
+									"prefixEncoded=escape(encodeURIComponent(pm.variables.get(\"prefix\")));",
+									"",
+									"pm.variables.set(\"prefixEncoded\", prefixEncoded);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/{{api_version}}/traffic/prefixes/{{prefixEncoded}}/devices?format=totals&timeStart={{start_time}}&timeEnd={{end_time}}",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"traffic",
+								"prefixes",
+								"{{prefixEncoded}}",
+								"devices"
 							],
 							"query": [
 								{
@@ -1454,6 +1546,11 @@
 									"pm.variables.set(\"start_time\", sd);",
 									"",
 									"//console.log(\"5 days ago was: \" + sd.format());",
+									"",
+									"prefixEncoded=escape(encodeURIComponent(pm.variables.get(\"prefix\")));",
+									"",
+									"pm.variables.set(\"prefixEncoded\", prefixEncoded);",
+									"",
 									""
 								],
 								"type": "text/javascript"
@@ -1475,7 +1572,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/{{api_version}}/traffic/prefixes/10.8.0.0/devices?format=totals&timeStart={{start_time}}&timeEnd={{end_time}}",
+							"raw": "https://{{host}}/api/{{api_version}}/traffic/prefixes/{{prefixEncoded}}/devices/{{cta.device_id}}?format=totals&timeStart={{start_time}}&timeEnd={{end_time}}",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
@@ -1485,8 +1582,9 @@
 								"{{api_version}}",
 								"traffic",
 								"prefixes",
-								"10.8.0.0",
-								"devices"
+								"{{prefixEncoded}}",
+								"devices",
+								"{{cta.device_id}}"
 							],
 							"query": [
 								{
@@ -1516,6 +1614,10 @@
 		},
 		{
 			"key": "cc.euuid",
+			"value": ""
+		},
+		{
+			"key": "cta.device_id",
 			"value": ""
 		}
 	]
