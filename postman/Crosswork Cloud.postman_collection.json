@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c90ae3fd-707e-416f-a0ea-aefd9b7a24e4",
+		"_postman_id": "fbe2268e-7061-4067-bbc3-6c46ec05b069",
 		"name": "Crosswork Cloud",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "1337005"
@@ -1460,7 +1460,7 @@
 									"",
 									"//console.log(\"5 days ago was: \" + sd.format());",
 									"",
-									"prefixEncoded=escape(encodeURIComponent(pm.variables.get(\"prefix\")));",
+									"prefixEncoded=escape(encodeURIComponent(pm.variables.get(\"traffic4prefix\")));",
 									"",
 									"pm.variables.set(\"prefixEncoded\", prefixEncoded);",
 									"",
@@ -1547,7 +1547,7 @@
 									"",
 									"//console.log(\"5 days ago was: \" + sd.format());",
 									"",
-									"prefixEncoded=escape(encodeURIComponent(pm.variables.get(\"prefix\")));",
+									"prefixEncoded=escape(encodeURIComponent(pm.variables.get(\"traffic4prefix\")));",
 									"",
 									"pm.variables.set(\"prefixEncoded\", prefixEncoded);",
 									"",
